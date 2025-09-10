@@ -1,0 +1,50 @@
+<!--pages/login/login.wxml-->
+<view class="login-container">
+  <view class="logo-section">
+    <image class="logo" src="/static/logo_ruiji.png"></image>
+    <text class="app-name">工大外送</text>
+    <text class="app-desc">美食送到家，生活更精彩</text>
+  </view>
+
+  <view class="login-section">
+    <view class="login-title">欢迎使用工大订餐</view>
+    <view class="login-desc">点击登录即可开始使用，头像昵称授权为可选项</view>
+    
+    <button 
+      class="login-btn" 
+      bindtap="wxLogin"
+      wx:if="{{!hasLogin}}"
+    >
+      <image class="wechat-icon" src="/static/wx-icon.png"></image>
+      微信一键登录
+    </button>
+    
+    <view class="login-tips">
+      <text class="tip-text">• 首次登录会弹出授权框（可选择拒绝）</text>
+      <text class="tip-text">• 拒绝授权仍可正常使用所有功能</text>
+    </view>
+    
+    <button 
+      class="phone-btn" 
+      open-type="getPhoneNumber" 
+      bindgetphonenumber="getPhoneNumber"
+      wx:if="{{!hasLogin}}"
+    >
+      <image class="phone-icon" src="/static/wx-icon.png"></image>
+      获取手机号（可选）
+    </button>
+
+    <view class="login-success" wx:if="{{hasLogin}}">
+      <image class="success-icon" src="/static/success.png"></image>
+      <text>登录成功！</text>
+      <button class="enter-btn" bindtap="enterApp">进入应用</button>
+    </view>
+  </view>
+
+  <view class="bottom-tips">
+    <text class="tip-text">登录即表示同意</text>
+    <text class="link-text">《用户协议》</text>
+    <text class="tip-text">和</text>
+    <text class="link-text">《隐私政策》</text>
+  </view>
+</view>

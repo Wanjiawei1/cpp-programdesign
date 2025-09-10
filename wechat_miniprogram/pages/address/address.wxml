@@ -1,0 +1,44 @@
+<!--pages/address/address.wxml-->
+<view class="customer-box">
+  <view class="address">
+    <view class="address_content" wx:if="{{addressList && addressList.length > 0}}">
+      <view class="address_liests" wx:for="{{addressList}}" wx:key="id">
+        <view class="list_item_top" bindtap="selectAddress" data-address="{{item}}">
+          <view class="item_left">
+            <view class="details">
+              <text class="tag tag{{item.label || 1}}">{{item.labelText || '家'}}</text>
+              <text class="address_word">{{item.detail}}</text>
+            </view>
+            <view class="sale">
+              <text class="name">{{item.consignee}} {{item.sex === '0' ? '男士' : '女士'}}</text>
+              <text class="num">{{item.phone}}</text>
+            </view>
+          </view>
+          <view class="item_right">
+            <image class="edit" src="/static/edit.png" catchtap="editAddress" data-address="{{item}}"></image>
+          </view>
+        </view>
+        <view class="list_item_bottom">
+          <label class="radio" catchtap="setDefault" data-id="{{item.id}}">
+            <radio class="item_radio" color="#FFC200" value="{{item.id}}" checked="{{item.isDefault === 1}}"></radio>
+            设为默认地址
+          </label>
+        </view>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty-container" wx:else>
+      <image class="empty-icon" src="/static/no_order.png" mode="aspectFit"></image>
+      <text class="empty-text">暂无地址</text>
+    </view>
+
+    <!-- 添加地址按钮 -->
+    <view class="add_address">
+      <button class="add_btn" bindtap="addAddress">
+        <text class="add-icon">+</text>
+        添加收货地址
+      </button>
+    </view>
+  </view>
+</view>

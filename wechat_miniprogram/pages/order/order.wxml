@@ -1,0 +1,44 @@
+<!--pages/order/order.wxml-->
+<view class="history_order">
+  <view class="recent_orders" wx:if="{{orders && orders.length > 0}}">
+    <view class="order_lists {{index === orders.length - 1 ? 'item-last' : ''}}" wx:for="{{orders}}" wx:key="id" bindtap="viewOrderDetail" data-id="{{item.id}}">
+      <!-- 订单头部：时间和状态 -->
+      <view class="date_type">
+        <text class="time">{{item.orderTime}}</text>
+        <text class="type {{item.statusClass}}">{{item.statusText}}</text>
+      </view>
+      
+      <!-- 订单商品详情 -->
+      <view class="food_num">
+        <!-- 商品列表 -->
+        <view class="food_num_item" wx:for="{{item.orderDetails}}" wx:for-item="detail" wx:key="id">
+          <text class="food">{{detail.name}}</text>
+          <text class="num">x{{detail.number}}</text>
+        </view>
+        
+        <!-- 订单总计 -->
+        <view class="numAndAum">
+          <text class="num_word">共{{item.totalNumber}}件商品, 实付</text>
+          <text class="num_word num_price">￥{{item.amount}}</text>
+        </view>
+        
+        <!-- 操作按钮 -->
+        <view class="btn" wx:if="{{item.status === 5}}">
+          <button class="new_btn" bindtap="reorder" data-id="{{item.id}}">再来一单</button>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-container" wx:else>
+    <image class="empty-icon" src="/static/no_order.png" mode="aspectFit"></image>
+    <text class="empty-text">暂无订单记录</text>
+    <button class="go-order-btn" bindtap="goToIndex">去逛逛</button>
+  </view>
+
+  <!-- 加载中 -->
+  <view class="loading" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+</view>

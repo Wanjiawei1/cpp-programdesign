@@ -1,0 +1,125 @@
+<!--pages/order/detail/detail.wxml-->
+<view class="detail-container">
+  <!-- 订单状态 -->
+  <view class="status-section">
+    <view class="status-icon">
+      <text class="icon">📦</text>
+    </view>
+    <view class="status-info">
+      <text class="status-text">{{orderDetail.statusText}}</text>
+      <text class="status-desc" wx:if="{{orderDetail.status === 4}}">骑手正在配送中，请耐心等待</text>
+      <text class="status-desc" wx:if="{{orderDetail.status === 5}}">订单已完成，感谢您的使用</text>
+    </view>
+  </view>
+
+  <!-- 配送信息 -->
+  <view class="delivery-section" wx:if="{{orderDetail.status >= 3}}">
+    <view class="section-title">配送信息</view>
+    <view class="delivery-info">
+      <view class="info-row">
+        <text class="label">收货地址：</text>
+        <text class="value">{{orderDetail.address}}</text>
+      </view>
+      <view class="info-row">
+        <text class="label">联系电话：</text>
+        <text class="value">{{orderDetail.phone}}</text>
+      </view>
+      <view class="info-row">
+        <text class="label">收货人：</text>
+        <text class="value">{{orderDetail.consignee}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 商品信息 -->
+  <view class="dish-section">
+    <view class="section-title">商品信息</view>
+    <view class="dish-list">
+      <view class="dish-item" wx:for="{{orderDetail.orderDetailList}}" wx:key="id">
+        <image class="dish-image" src="{{item.image}}" mode="aspectFill"></image>
+        <view class="dish-info">
+          <text class="dish-name">{{item.name}}</text>
+          <text class="dish-flavor" wx:if="{{item.dishFlavor}}">{{item.dishFlavor}}</text>
+          <view class="dish-bottom">
+            <text class="dish-price">¥{{item.amount}}</text>
+            <text class="dish-quantity">x{{item.number}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 订单信息 -->
+  <view class="order-section">
+    <view class="section-title">订单信息</view>
+    <view class="order-info">
+      <view class="info-row">
+        <text class="label">订单号：</text>
+        <text class="value">{{orderDetail.number}}</text>
+      </view>
+      <view class="info-row">
+        <text class="label">下单时间：</text>
+        <text class="value">{{orderDetail.orderTime}}</text>
+      </view>
+      <view class="info-row" wx:if="{{orderDetail.checkoutTime}}">
+        <text class="label">结账时间：</text>
+        <text class="value">{{orderDetail.checkoutTime}}</text>
+      </view>
+      <view class="info-row">
+        <text class="label">支付方式：</text>
+        <text class="value">{{orderDetail.payMethod === 1 ? '微信支付' : '支付宝'}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 费用明细 -->
+  <view class="price-section">
+    <view class="section-title">费用明细</view>
+    <view class="price-info">
+      <view class="price-row">
+        <text class="label">商品总额</text>
+        <text class="value">{{orderAmountText}}</text>
+      </view>
+      <view class="price-row">
+        <text class="label">配送费</text>
+        <text class="value">¥3.00</text>
+      </view>
+      <view class="price-row total">
+        <text class="label">实付金额</text>
+        <text class="value">¥{{orderDetail.amount}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 订单操作 -->
+  <view class="action-section">
+    <button 
+      class="action-btn cancel"
+      wx:if="{{orderDetail.status === 1}}"
+      bindtap="cancelOrder"
+    >
+      取消订单
+    </button>
+    <button 
+      class="action-btn pay"
+      wx:if="{{orderDetail.status === 1}}"
+      bindtap="payOrder"
+    >
+      去支付
+    </button>
+    <button 
+      class="action-btn reminder"
+      wx:if="{{orderDetail.status === 3}}"
+      bindtap="reminderOrder"
+    >
+      催单
+    </button>
+    <button 
+      class="action-btn repeat"
+      wx:if="{{orderDetail.status === 5 || orderDetail.status === 6}}"
+      bindtap="repeatOrder"
+    >
+      再来一单
+    </button>
+  </view>
+</view>

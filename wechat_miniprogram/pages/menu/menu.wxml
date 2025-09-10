@@ -1,0 +1,142 @@
+<!--pages/menu/menu.wxml-->
+<view class="menu-container">
+  <!-- 分类侧边栏 -->
+  <view class="category-sidebar">
+    <view 
+      class="category-item {{currentCategory === item.id ? 'active' : ''}}"
+      wx:for="{{categories}}" 
+      wx:key="id"
+      bindtap="onCategoryTap"
+      data-id="{{item.id}}"
+      data-index="{{index}}"
+    >
+      <text class="category-name">{{item.name}}</text>
+    </view>
+  </view>
+
+  <!-- 菜品内容区 -->
+  <view class="dish-content">
+    <scroll-view 
+      class="dish-scroll" 
+      scroll-y="true" 
+      scroll-into-view="{{scrollIntoView}}"
+      bindscroll="onScroll"
+      scroll-with-animation="true"
+    >
+      <!-- 菜品分类区块 -->
+      <view 
+        class="dish-category-block" 
+        wx:for="{{dishCategories}}" 
+        wx:key="categoryId"
+        id="category-{{item.categoryId}}"
+      >
+        <view class="category-title">{{item.categoryName}}</view>
+        
+        <!-- 菜品列表 -->
+        <view class="dish-list">
+          <view 
+            class="dish-item"
+            wx:for="{{item.dishes}}" 
+            wx:for-item="dish"
+            wx:key="id"
+          >
+            <view class="dish-image" bindtap="showDishDetail" data-dish="{{dish}}">
+              <image 
+                wx:if="{{dish.image}}" 
+                src="{{dish.image}}" 
+                mode="aspectFill"
+                lazy-load="{{true}}"
+                show-menu-by-longpress="{{false}}"
+              ></image>
+              <view wx:else class="dish-placeholder">
+                <text class="placeholder-text">🍽️</text>
+              </view>
+            </view>
+            <view class="dish-info">
+              <text class="dish-name">{{dish.name}}</text>
+              <text class="dish-description">{{dish.description}}</text>
+              <view class="dish-bottom">
+                <text class="dish-price">{{dish.price}}</text>
+                <view class="dish-controls">
+                  <view 
+                    class="control-btn minus {{dish.cartCount > 0 ? '' : 'disabled'}}"
+                    bindtap="minusDish"
+                    data-dish="{{dish}}"
+                    wx:if="{{dish.cartCount > 0}}"
+                  >
+                    <text class="control-icon">-</text>
+                  </view>
+                  <text class="dish-count" wx:if="{{dish.cartCount > 0}}">{{dish.cartCount}}</text>
+                  <view class="control-btn plus" bindtap="addDish" data-dish="{{dish}}">
+                    <text class="control-icon">+</text>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 加载状态 -->
+      <view class="loading" wx:if="{{loading}}">
+        <text>加载中...</text>
+      </view>
+
+      <!-- 空状态 -->
+      <view class="empty" wx:if="{{!loading && dishCategories.length === 0}}">
+        <image class="empty-icon" src="/static/no_order.png" mode="aspectFit"></image>
+        <text class="empty-text">暂无菜品</text>
+      </view>
+
+      <!-- 底部安全区域 -->
+      <view class="safe-bottom"></view>
+    </scroll-view>
+  </view>
+
+  <!-- 购物车浮窗 -->
+  <view class="cart-float" wx:if="{{cartCount > 0}}" bindtap="goToCart">
+    <view class="cart-info">
+      <view class="cart-icon-wrapper">
+        <image class="cart-icon" src="/static/btn_waiter_sel.png" mode="aspectFit"></image>
+        <view class="cart-badge">{{cartCount}}</view>
+      </view>
+      <view class="cart-text">
+        <text class="cart-price">{{totalPriceText}}</text>
+        <text class="delivery-fee">另需配送费¥3</text>
+      </view>
+    </view>
+    <view class="checkout-btn">
+      <text>去结算</text>
+    </view>
+  </view>
+</view>
+
+<!-- 菜品详情弹窗 -->
+<view class="dish-detail-modal {{showDetail ? 'show' : ''}}" bindtap="hideDetail">
+  <view class="modal-content" catchtap="true" wx:if="{{selectedDish}}">
+    <view class="modal-header">
+      <image class="detail-image" src="{{selectedDish.image}}" mode="aspectFill"></image>
+      <view class="close-btn" bindtap="hideDetail">×</view>
+    </view>
+    <view class="modal-body">
+      <text class="detail-name">{{selectedDish.name}}</text>
+      <text class="detail-description">{{selectedDish.description}}</text>
+      <text class="detail-price">{{selectedDish.price}}</text>
+    </view>
+    <view class="modal-footer">
+      <view class="quantity-controls">
+        <view 
+          class="control-btn minus {{selectedDish.cartCount > 0 ? '' : 'disabled'}}"
+          bindtap="minusDetailDish"
+          wx:if="{{selectedDish.cartCount > 0}}"
+        >
+          <text class="control-icon">-</text>
+        </view>
+        <text class="quantity-text" wx:if="{{selectedDish.cartCount > 0}}">{{selectedDish.cartCount}}</text>
+        <view class="control-btn plus" bindtap="addDetailDish">
+          <text class="control-icon">+</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

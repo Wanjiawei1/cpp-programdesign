@@ -1,0 +1,93 @@
+<!--pages/profile/profile.wxml-->
+<view class="profile-container">
+  <!-- 用户信息头部 -->
+  <view class="user-header">
+    <view class="header-bg"></view>
+    <view class="user-info">
+      <view class="avatar-container">
+        <image class="avatar" src="{{userInfo.avatarUrl || '/static/R-C.jpg'}}" mode="aspectFill"></image>
+        <view class="avatar-border"></view>
+      </view>
+      <view class="user-details">
+        <view class="user-name">
+          <text class="name">{{userInfo.nickName || '用户'}}</text>
+          <view class="gender-icon" wx:if="{{userInfo.gender === 1}}">♂</view>
+          <view class="gender-icon female" wx:else>♀</view>
+        </view>
+        <view class="user-phone">
+          <text class="phone">{{userInfo.phone || '未绑定手机'}}</text>
+        </view>
+        <view class="user-level">
+          <text class="level-text">VIP会员</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 主要内容 -->
+  <scroll-view class="content-scroll" scroll-y="true">
+    <!-- 功能菜单 -->
+    <view class="menu-section">
+      <view class="menu-card">
+        <view class="menu-item" bindtap="goToAddress">
+          <view class="menu-icon address-icon">📍</view>
+          <text class="menu-text">地址管理</text>
+          <view class="menu-arrow">›</view>
+        </view>
+        <view class="menu-divider"></view>
+        <view class="menu-item" bindtap="goToOrders">
+          <view class="menu-icon order-icon">📋</view>
+          <text class="menu-text">历史订单</text>
+          <view class="menu-arrow">›</view>
+        </view>
+        <view class="menu-divider"></view>
+        <view class="menu-item" bindtap="contactService">
+          <view class="menu-icon service-icon">💬</view>
+          <text class="menu-text">联系客服</text>
+          <view class="menu-arrow">›</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 最近订单 -->
+    <view class="orders-section" wx:if="{{recentOrders && recentOrders.length > 0}}">
+      <view class="section-title">
+        <text class="title-text">最近订单</text>
+        <view class="title-line"></view>
+      </view>
+      
+      <view class="orders-list">
+        <view class="order-card" wx:for="{{recentOrders}}" wx:key="id">
+          <view class="order-header">
+            <text class="order-time">{{item.orderTime}}</text>
+            <view class="order-status {{item.statusClass}}">{{item.statusText}}</view>
+          </view>
+          
+          <view class="order-items">
+            <view class="order-item" wx:for="{{item.orderDetails}}" wx:for-item="detail" wx:key="id">
+              <text class="item-name">{{detail.name}}</text>
+              <text class="item-quantity">x{{detail.number}}</text>
+            </view>
+          </view>
+          
+          <view class="order-footer">
+            <view class="order-total">
+              <text class="total-text">共{{item.totalNumber}}件商品，实付</text>
+              <text class="total-amount">￥{{item.amount}}</text>
+            </view>
+            <view class="order-actions" wx:if="{{item.status === 5}}">
+              <button class="action-btn reorder-btn" bindtap="reorder" data-id="{{item.id}}">再来一单</button>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 登录/退出按钮 -->
+    <view class="action-section">
+      <view class="action-btn {{userInfo ? 'logout-btn' : 'login-btn'}}" bindtap="{{userInfo ? 'logout' : 'goToLogin'}}">
+        <text class="btn-text">{{userInfo ? '退出登录' : '立即登录'}}</text>
+      </view>
+    </view>
+  </scroll-view>
+</view>

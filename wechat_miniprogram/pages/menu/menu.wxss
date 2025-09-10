@@ -1,0 +1,484 @@
+/* pages/menu/menu.wxss */
+.menu-container {
+  display: flex;
+  height: 100vh;
+  background: #f8f9fa;
+}
+
+/* 分类侧边栏 */
+.category-sidebar {
+  width: 180rpx;
+  background: #ffffff;
+  border-right: 1rpx solid #f0f0f0;
+  box-shadow: 2rpx 0 8rpx rgba(0, 0, 0, 0.06);
+}
+
+.category-item {
+  padding: 36rpx 20rpx;
+  text-align: center;
+  border-bottom: 1rpx solid #f5f5f5;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.category-item:hover {
+  background: #fafafa;
+}
+
+.category-item.active {
+  background: #f0f9ff;
+  color: #1890ff;
+}
+
+.category-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6rpx;
+  height: 40rpx;
+  background: #1890ff;
+  border-radius: 0 3rpx 3rpx 0;
+}
+
+.category-name {
+  font-size: 26rpx;
+  line-height: 1.4;
+  display: block;
+}
+
+/* 菜品内容区 */
+.dish-content {
+  flex: 1;
+  background: white;
+}
+
+.dish-scroll {
+  height: 100%;
+}
+
+.dish-category-block {
+  margin-bottom: 20rpx;
+}
+
+.category-title {
+  padding: 32rpx 32rpx 24rpx;
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #1f2937;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border-bottom: 1rpx solid #e5e7eb;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+/* 菜品列表 */
+.dish-list {
+  background: #f8f9fa;
+  padding-bottom: 16rpx;
+}
+
+.dish-item {
+  display: flex;
+  padding: 32rpx 24rpx;
+  margin: 16rpx 24rpx;
+  background: white;
+  border-radius: 16rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease;
+}
+
+.dish-item:hover {
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.08);
+  transform: translateY(-2rpx);
+}
+
+.dish-item:last-child {
+  margin-bottom: 32rpx;
+}
+
+.dish-image {
+  width: 180rpx;
+  height: 180rpx;
+  border-radius: 16rpx;
+  margin-right: 24rpx;
+  flex-shrink: 0;
+  overflow: hidden;
+  background: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.dish-image image {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.3s ease;
+}
+
+.dish-image:hover image {
+  transform: scale(1.05);
+}
+
+.dish-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.placeholder-text {
+  font-size: 48rpx;
+  opacity: 0.6;
+}
+
+.dish-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 8rpx 0;
+}
+
+.dish-name {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 12rpx;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  letter-spacing: 0.5rpx;
+}
+
+.dish-description {
+  font-size: 26rpx;
+  color: #6b7280;
+  line-height: 1.5;
+  margin-bottom: 24rpx;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.dish-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dish-price {
+  font-size: 38rpx;
+  font-weight: 700;
+  color: #ef4444;
+  letter-spacing: 1rpx;
+}
+
+.dish-price::before {
+  content: '¥';
+  font-size: 28rpx;
+  font-weight: 500;
+}
+
+/* 菜品控制按钮 */
+.dish-controls {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.control-btn {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.1);
+}
+
+.control-btn.plus {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  color: white;
+}
+
+.control-btn.plus:active {
+  background: linear-gradient(135deg, #1d4ed8 0%, #1e3a8a 100%);
+  transform: scale(0.95);
+}
+
+.control-btn.minus {
+  background: #f8fafc;
+  color: #64748b;
+  border: 2rpx solid #e2e8f0;
+}
+
+.control-btn.minus:active {
+  background: #f1f5f9;
+  transform: scale(0.95);
+}
+
+.control-btn.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.control-icon {
+  line-height: 1;
+  font-size: 32rpx;
+}
+
+.dish-count {
+  margin: 0;
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #1f2937;
+  min-width: 48rpx;
+  text-align: center;
+}
+
+/* 购物车浮窗 */
+.cart-float {
+  position: fixed;
+  bottom: 120rpx;
+  left: 32rpx;
+  right: 32rpx;
+  height: 112rpx;
+  background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+  border-radius: 56rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32rpx;
+  z-index: 100;
+  box-shadow: 0 12rpx 24rpx rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10rpx);
+}
+
+.cart-info {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.cart-icon-wrapper {
+  position: relative;
+  margin-right: 20rpx;
+}
+
+.cart-icon {
+  width: 48rpx;
+  height: 48rpx;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -8rpx;
+  right: -8rpx;
+  background: #ff4d4f;
+  color: white;
+  font-size: 20rpx;
+  min-width: 32rpx;
+  height: 32rpx;
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8rpx;
+}
+
+.cart-text {
+  color: white;
+}
+
+.cart-price {
+  font-size: 32rpx;
+  font-weight: bold;
+  display: block;
+}
+
+.delivery-fee {
+  font-size: 24rpx;
+  opacity: 0.8;
+}
+
+.checkout-btn {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  color: white;
+  padding: 24rpx 48rpx;
+  border-radius: 48rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  box-shadow: 0 4rpx 8rpx rgba(59, 130, 246, 0.3);
+}
+
+.checkout-btn:active {
+  transform: scale(0.95);
+  box-shadow: 0 2rpx 4rpx rgba(59, 130, 246, 0.3);
+}
+
+/* 菜品详情弹窗 */
+.dish-detail-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 200;
+  display: flex;
+  align-items: flex-end;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(8rpx);
+}
+
+.dish-detail-modal.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-content {
+  width: 100%;
+  background: white;
+  border-radius: 32rpx 32rpx 0 0;
+  overflow: hidden;
+  transform: translateY(100%);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 -8rpx 32rpx rgba(0, 0, 0, 0.12);
+}
+
+.dish-detail-modal.show .modal-content {
+  transform: translateY(0);
+}
+
+.modal-header {
+  position: relative;
+  height: 480rpx;
+  overflow: hidden;
+}
+
+.detail-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.close-btn {
+  position: absolute;
+  top: 32rpx;
+  right: 32rpx;
+  width: 72rpx;
+  height: 72rpx;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36rpx;
+  font-weight: 300;
+  backdrop-filter: blur(8rpx);
+  transition: all 0.2s ease;
+}
+
+.close-btn:active {
+  transform: scale(0.9);
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.modal-body {
+  padding: 40rpx;
+}
+
+.detail-name {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  display: block;
+  margin-bottom: 20rpx;
+}
+
+.detail-description {
+  font-size: 28rpx;
+  color: #666;
+  line-height: 1.5;
+  display: block;
+  margin-bottom: 30rpx;
+}
+
+.detail-price {
+  font-size: 42rpx;
+  font-weight: 700;
+  color: #ef4444;
+  display: block;
+  letter-spacing: 1rpx;
+}
+
+.detail-price::before {
+  content: '¥';
+  font-size: 32rpx;
+  font-weight: 500;
+}
+
+.modal-footer {
+  padding: 30rpx 40rpx 60rpx;
+  display: flex;
+  justify-content: center;
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+}
+
+.quantity-controls .control-btn {
+  width: 64rpx;
+  height: 64rpx;
+  font-size: 36rpx;
+}
+
+.quantity-text {
+  margin: 0 40rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  min-width: 60rpx;
+  text-align: center;
+}
+
+/* 加载和空状态 */
+.loading,
+.empty {
+  text-align: center;
+  padding: 100rpx 0;
+  color: #999;
+}
+
+.empty-icon {
+  width: 120rpx;
+  height: 120rpx;
+  margin-bottom: 20rpx;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  display: block;
+}
+
+/* 底部安全区域 */
+.safe-bottom {
+  height: 160rpx;
+}

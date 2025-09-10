@@ -1,0 +1,189 @@
+<!--pages/index/index.wxml-->
+<view class="home-content">
+  <!-- 餐厅信息区域 -->
+  <view class="restaurant-info-box">
+    <view class="restaurant-info">
+      <view class="info-top">
+        <view class="info-top-left">
+          <image class="logo-ruiji" src="/static/R-C.jpg"></image>
+        </view>
+        <view class="info-top-right">
+          <view class="right-title">
+            <text>工大外送</text>
+          </view>
+          <view class="right-details">
+            <view class="details-flex">
+              <image class="top-icon" src="/static/length.png"></image>
+              <text class="icon-text">距离1.5km</text>
+            </view>
+            <view class="details-flex">
+              <image class="top-icon" src="/static/money.png"></image>
+              <text class="icon-text">配送费3元</text>
+            </view>
+            <view class="details-flex">
+              <image class="top-icon" src="/static/time.png"></image>
+              <text class="icon-text">预计时长15min</text>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="info-bottom">
+        <text class="word">简介: 工大外送是专业的校园外送平台，旨在为学生提供便捷、优质的外送服务。</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 菜单列表区域 -->
+  <view class="restaurant-menu-list">
+    <!-- 分类列表 -->
+    <scroll-view class="type-list" scroll-y="true" wx:if="{{categories.length > 0}}">
+      <view 
+        wx:for="{{categories}}" 
+        wx:key="id"
+        class="type-item {{currentCategory && currentCategory.id === item.id ? 'active' : ''}}"
+        bindtap="onCategoryTap"
+        data-category="{{item}}"
+      >
+        {{item.name}}
+      </view>
+      <view class="seize-seat"></view>
+    </scroll-view>
+
+    <!-- 菜品列表 -->
+    <scroll-view class="vegetable-order-list" scroll-y="true" wx:if="{{dishList.length > 0}}">
+      <view 
+        wx:for="{{dishList}}" 
+        wx:key="id"
+        class="dish-item"
+      >
+        <view class="dish-img" bindtap="showDishDetail" data-dish="{{item}}">
+          <image class="dish-img-url" mode="aspectFill" src="{{item.image || '/static/no_order.png'}}"></image>
+        </view>
+        <view class="dish-info">
+          <view class="dish-name" bindtap="showDishDetail" data-dish="{{item}}">{{item.name}}</view>
+          <view class="dish-label" bindtap="showDishDetail" data-dish="{{item}}">{{item.description || item.name}}</view>
+          <view class="dish-label">月销量{{item.sales || 0}}</view>
+          <view class="dish-price">
+            <text class="ico">￥</text>{{item.displayPrice}}
+          </view>
+          <view class="dish-active">
+            <image 
+              wx:if="{{item.number && item.number >= 1}}"
+              class="dish-red" 
+              src="/static/btn_red.png" 
+              bindtap="removeDish" 
+              data-dish="{{item}}"
+            ></image>
+            <text wx:if="{{item.number && item.number > 0}}" class="dish-number">{{item.number}}</text>
+            <image 
+              class="dish-add" 
+              src="/static/btn_add.png" 
+              bindtap="addDish" 
+              data-dish="{{item}}"
+            ></image>
+          </view>
+        </view>
+      </view>
+      <view class="seize-seat"></view>
+    </scroll-view>
+
+    <!-- 空状态 -->
+    <view class="no-dish" wx:if="{{categories.length > 0 && dishList.length === 0}}">
+      <view>该分类下暂无菜品</view>
+    </view>
+  </view>
+
+  <!-- 底部购物车 -->
+  <view class="footer-order-bottom {{cartCount > 0 ? 'order-form' : ''}}">
+    <view class="order-number" bindtap="toggleCart">
+      <image 
+        class="order-number-icon" 
+        src="{{cartCount > 0 ? '/static/btn_waiter_sel.png' : '/static/btn_waiter_nor.png'}}"
+      ></image>
+      <view class="order-dish-num" wx:if="{{cartCount > 0}}">{{cartCount}}</view>
+    </view>
+    <view class="order-price">
+      <text class="ico">￥</text>{{totalPriceText}}
+    </view>
+    <view class="order-but" bindtap="goToCart">
+      {{checkoutText}}
+    </view>
+  </view>
+
+  <!-- 菜品详情弹窗 -->
+  <view class="pop-mask" wx:if="{{showDetailPop}}" bindtap="hideDetailPop">
+    <view class="dish-detail-pop" catchtap="stopPropagation">
+      <image class="div-big-image" mode="aspectFill" src="{{selectedDish.image || '/static/no_order.png'}}"></image>
+      <view class="title">{{selectedDish.name}}</view>
+      <view class="desc">{{selectedDish.description}}</view>
+      <view class="but-item">
+        <view class="price">
+          <text class="ico">￥</text>{{selectedDish.price}}
+        </view>
+        <view class="active">
+          <image 
+            wx:if="{{selectedDish.number && selectedDish.number > 0}}"
+            class="dish-red" 
+            src="/static/btn_red.png" 
+            bindtap="removeDishFromDetail"
+          ></image>
+          <text wx:if="{{selectedDish.number && selectedDish.number > 0}}" class="dish-number">{{selectedDish.number}}</text>
+          <image class="dish-add" src="/static/btn_add.png" bindtap="addDishFromDetail"></image>
+        </view>
+      </view>
+      <view class="close" bindtap="hideDetailPop">
+        <image class="close-img" src="/static/but_close.png"></image>
+      </view>
+    </view>
+  </view>
+
+  <!-- 购物车弹窗 -->
+  <view class="pop-mask" wx:if="{{showCartPop}}" bindtap="hideCartPop">
+    <view class="cart-pop" catchtap="stopPropagation">
+      <view class="top-title">
+        <view class="tit">购物车</view>
+        <view class="clear" bindtap="clearCart">
+          <image class="clear-icon" src="/static/clear.png"></image>
+          <text class="clear-des">清空</text>
+        </view>
+      </view>
+      <scroll-view class="card-order-list" scroll-y="true">
+        <view wx:for="{{cartItems}}" wx:key="id" class="type-item">
+          <view class="dish-img">
+            <image class="dish-img-url" mode="aspectFill" src="{{item.image || '/static/no_order.png'}}"></image>
+          </view>
+          <view class="dish-info">
+            <view class="dish-name">{{item.name}}</view>
+            <view class="dish-price">
+              <text class="ico">￥</text>{{item.amount}}
+            </view>
+            <view class="dish-active">
+              <image 
+                wx:if="{{item.number && item.number > 0}}"
+                class="dish-red" 
+                src="/static/btn_red.png" 
+                bindtap="removeFromCart" 
+                data-item="{{item}}"
+              ></image>
+              <text wx:if="{{item.number && item.number > 0}}" class="dish-number">{{item.number}}</text>
+              <image 
+                class="dish-add" 
+                src="/static/btn_add.png" 
+                bindtap="addToCart" 
+                data-item="{{item}}"
+              ></image>
+            </view>
+          </view>
+        </view>
+        <view class="seize-seat"></view>
+      </scroll-view>
+    </view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="pop-mask" wx:if="{{loading}}">
+    <view class="loading">
+      <image class="loading-ico" src="/static/lodding.gif"></image>
+    </view>
+  </view>
+</view>

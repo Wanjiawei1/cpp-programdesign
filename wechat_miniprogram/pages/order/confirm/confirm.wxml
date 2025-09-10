@@ -1,0 +1,99 @@
+<!--pages/order/confirm/confirm.wxml-->
+<view class="confirm-container">
+  <!-- 收货地址 -->
+  <view class="address-section" bindtap="selectAddress">
+    <view class="address-content" wx:if="{{selectedAddress}}">
+      <view class="address-info">
+        <text class="name">{{selectedAddress.consignee}}</text>
+        <text class="phone">{{selectedAddress.phone}}</text>
+      </view>
+      <text class="address">{{selectedAddress.provinceName}}{{selectedAddress.cityName}}{{selectedAddress.districtName}}{{selectedAddress.detail}}</text>
+    </view>
+    <view class="no-address" wx:else="{{!selectedAddress}}">
+      <text class="tip-text">请选择收货地址</text>
+    </view>
+    <text class="arrow">></text>
+  </view>
+
+  <!-- 商品列表 -->
+  <view class="dish-section">
+    <view class="section-header">
+      <text class="shop-name">工大订餐</text>
+    </view>
+    <view class="dish-list">
+      <view class="dish-item" wx:for="{{cartItems}}" wx:key="id">
+        <image class="dish-image" src="{{item.image}}" mode="aspectFill"></image>
+        <view class="dish-info">
+          <text class="dish-name">{{item.name}}</text>
+          <text class="dish-flavor" wx:if="{{item.dishFlavor}}">{{item.dishFlavor}}</text>
+          <view class="dish-bottom">
+            <text class="dish-price">¥{{item.totalPrice}}</text>
+            <text class="dish-quantity">x{{item.number}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 配送时间 -->
+  <view class="delivery-section">
+    <view class="delivery-item">
+      <text class="label">配送时间</text>
+      <text class="value">尽快送达 (约30分钟)</text>
+    </view>
+  </view>
+
+  <!-- 订单备注 -->
+  <view class="remark-section">
+    <view class="remark-item">
+      <text class="label">订单备注</text>
+      <input 
+        class="remark-input" 
+        placeholder="可告知商家您的特殊需求"
+        value="{{remark}}"
+        bindinput="onRemarkInput"
+      />
+    </view>
+  </view>
+
+  <!-- 费用明细 -->
+  <view class="price-section">
+    <view class="price-row">
+      <text class="label">商品总额</text>
+      <text class="value">{{totalAmountText}}</text>
+    </view>
+    <view class="price-row">
+      <text class="label">配送费</text>
+      <text class="value">¥3.00</text>
+    </view>
+    <view class="price-row total">
+      <text class="label">实付金额</text>
+      <text class="value">{{finalAmountText}}</text>
+    </view>
+  </view>
+
+  <!-- 支付方式 -->
+  <view class="payment-section">
+    <view class="payment-item" bindtap="selectPayment">
+      <text class="label">支付方式</text>
+      <view class="payment-info">
+        <text class="payment-icon">💳</text>
+        <text class="payment-name">微信支付</text>
+        <text class="arrow">></text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 提交订单 -->
+  <view class="submit-section">
+    <view class="price-info">
+      <text class="total-text">实付: {{finalAmountText}}</text>
+    </view>
+    <button 
+      class="submit-btn {{!selectedAddress ? 'disabled' : ''}}" 
+      bindtap="submitOrder"
+    >
+      提交订单
+    </button>
+  </view>
+</view>

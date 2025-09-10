@@ -1,0 +1,358 @@
+/* pages/order/order.wxss */
+page {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+}
+
+.history_order {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20rpx;
+  box-sizing: border-box;
+}
+
+.recent_orders {
+  width: 100%;
+  max-width: 750rpx;
+  margin: 0 auto;
+}
+
+.order_lists {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10rpx);
+  -webkit-backdrop-filter: blur(10rpx);
+  margin-bottom: 30rpx;
+  border-radius: 24rpx;
+  padding: 32rpx;
+  box-shadow: 0 8rpx 32rpx rgba(102, 126, 234, 0.15);
+  border: 1rpx solid rgba(255, 255, 255, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.order_lists:hover {
+  transform: translateY(-4rpx);
+  box-shadow: 0 12rpx 40rpx rgba(102, 126, 234, 0.25);
+}
+
+.order_lists::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6rpx;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  border-radius: 24rpx 24rpx 0 0;
+}
+
+.date_type {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 2rpx solid rgba(102, 126, 234, 0.1);
+  position: relative;
+}
+
+.date_type .time {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #333;
+  letter-spacing: 0.5rpx;
+}
+
+.date_type .type {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #667eea;
+  padding: 8rpx 16rpx;
+  background: rgba(102, 126, 234, 0.1);
+  border-radius: 16rpx;
+  backdrop-filter: blur(10rpx);
+  border: 1rpx solid rgba(102, 126, 234, 0.2);
+}
+
+/* 订单状态样式 */
+.date_type .status-pending {
+  background: rgba(255, 107, 53, 0.15);
+  color: #ff6b35 !important;
+  border: 1rpx solid rgba(255, 107, 53, 0.3);
+  -webkit-text-fill-color: #ff6b35 !important;
+}
+
+.date_type .status-waiting {
+  background: rgba(255, 193, 0, 0.15);
+  color: #ffc100 !important;
+  border: 1rpx solid rgba(255, 193, 0, 0.3);
+  -webkit-text-fill-color: #ffc100 !important;
+}
+
+.date_type .status-confirmed {
+  background: rgba(59, 130, 246, 0.15);
+  color: #3b82f6 !important;
+  border: 1rpx solid rgba(59, 130, 246, 0.3);
+  -webkit-text-fill-color: #3b82f6 !important;
+}
+
+.date_type .status-delivering {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981 !important;
+  border: 1rpx solid rgba(16, 185, 129, 0.3);
+  -webkit-text-fill-color: #10b981 !important;
+}
+
+.date_type .status-completed {
+  background: rgba(34, 197, 94, 0.15);
+  color: #22c55e !important;
+  border: 1rpx solid rgba(34, 197, 94, 0.3);
+  -webkit-text-fill-color: #22c55e !important;
+}
+
+.date_type .status-cancelled {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444 !important;
+  border: 1rpx solid rgba(239, 68, 68, 0.3);
+  -webkit-text-fill-color: #ef4444 !important;
+}
+
+.date_type .status-unknown {
+  background: rgba(107, 114, 128, 0.15);
+  color: #6b7280 !important;
+  border: 1rpx solid rgba(107, 114, 128, 0.3);
+  -webkit-text-fill-color: #6b7280 !important;
+}
+
+.date_type .status-waiting {
+  background: rgba(255, 193, 0, 0.15);
+  color: #ffc100 !important;
+  border: 1rpx solid rgba(255, 193, 0, 0.3);
+}
+
+.date_type .status-confirmed {
+  background: rgba(59, 130, 246, 0.15);
+  color: #3b82f6 !important;
+  border: 1rpx solid rgba(59, 130, 246, 0.3);
+}
+
+.date_type .status-delivering {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981 !important;
+  border: 1rpx solid rgba(16, 185, 129, 0.3);
+}
+
+.date_type .status-completed {
+  background: rgba(34, 197, 94, 0.15);
+  color: #22c55e !important;
+  border: 1rpx solid rgba(34, 197, 94, 0.3);
+}
+
+.date_type .status-cancelled {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444 !important;
+  border: 1rpx solid rgba(239, 68, 68, 0.3);
+}
+
+.date_type .status-unknown {
+  background: rgba(107, 114, 128, 0.15);
+  color: #6b7280 !important;
+  border: 1rpx solid rgba(107, 114, 128, 0.3);
+}
+
+.food_num {
+  margin: 0;
+  margin-bottom: 24rpx;
+}
+
+.food_num_item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16rpx 0;
+  border-bottom: 1rpx solid rgba(102, 126, 234, 0.08);
+  position: relative;
+}
+
+.food_num_item:last-child {
+  border-bottom: none;
+}
+
+.food_num_item::before {
+  content: '•';
+  color: #667eea;
+  font-weight: bold;
+  margin-right: 12rpx;
+  font-size: 32rpx;
+}
+
+.food_num_item .food {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 500;
+  flex: 1;
+  margin-left: 8rpx;
+}
+
+.food_num_item .num {
+  font-size: 26rpx;
+  color: #667eea;
+  font-weight: 600;
+  background: rgba(102, 126, 234, 0.1);
+  padding: 4rpx 12rpx;
+  border-radius: 12rpx;
+  backdrop-filter: blur(10rpx);
+}
+
+.numAndAum {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+  padding: 20rpx;
+  border-radius: 16rpx;
+  margin-bottom: 24rpx;
+  border: 1rpx solid rgba(102, 126, 234, 0.1);
+}
+
+.numAndAum .num_word {
+  font-size: 28rpx;
+  color: #666;
+  line-height: 1.6;
+  text-align: right;
+}
+
+.numAndAum .num_price {
+  font-size: 32rpx;
+  font-weight: 700;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-left: 8rpx;
+}
+
+.btn {
+  text-align: right;
+  margin-top: 8rpx;
+}
+
+.btn .new_btn {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #fff;
+  border: none;
+  padding: 16rpx 32rpx;
+  border-radius: 50rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  box-shadow: 0 8rpx 24rpx rgba(102, 126, 234, 0.3);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn .new_btn:hover {
+  transform: translateY(-2rpx);
+  box-shadow: 0 12rpx 32rpx rgba(102, 126, 234, 0.4);
+}
+
+.btn .new_btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn .new_btn:active::before {
+  left: 100%;
+}
+
+/* 空状态 */
+.empty-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+  padding: 60rpx 40rpx;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20rpx);
+  -webkit-backdrop-filter: blur(20rpx);
+  border-radius: 32rpx;
+  margin: 40rpx 20rpx;
+  border: 1rpx solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8rpx 32rpx rgba(102, 126, 234, 0.15);
+}
+
+.empty-icon {
+  width: 240rpx;
+  height: 240rpx;
+  margin-bottom: 48rpx;
+  opacity: 0.8;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10rpx);
+  padding: 40rpx;
+  box-sizing: border-box;
+}
+
+.empty-text {
+  font-size: 32rpx;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 80rpx;
+  text-align: center;
+  font-weight: 500;
+  letter-spacing: 1rpx;
+}
+
+.go-order-btn {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #fff;
+  border: none;
+  padding: 20rpx 48rpx;
+  border-radius: 50rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+  box-shadow: 0 8rpx 24rpx rgba(102, 126, 234, 0.3);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.go-order-btn:hover {
+  transform: translateY(-4rpx);
+  box-shadow: 0 12rpx 32rpx rgba(102, 126, 234, 0.4);
+}
+
+.go-order-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.go-order-btn:active::before {
+  left: 100%;
+}
+
+/* 加载状态 */
+.loading {
+  text-align: center;
+  padding: 60rpx 40rpx;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 30rpx;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20rpx);
+  -webkit-backdrop-filter: blur(20rpx);
+  border-radius: 24rpx;
+  margin: 40rpx 20rpx;
+  border: 1rpx solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8rpx 24rpx rgba(102, 126, 234, 0.15);
+}
